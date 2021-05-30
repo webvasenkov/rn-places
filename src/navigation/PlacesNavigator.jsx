@@ -30,7 +30,7 @@ const PlacesNavigator = () => {
                 name='add-outline'
                 color={Platform.OS === 'android' ? color.primary : color.accent}
                 size={26}
-                style={{ marginRight: 5 }}
+                style={{ marginRight: 15 }}
                 onPress={() => navigation.navigate('NewPlace')}
               />
             ),

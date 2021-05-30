@@ -3,28 +3,20 @@ import { View, Image, Text, Alert, StyleSheet, ActivityIndicator } from 'react-n
 import { color } from '../constants/styleGuide';
 import Button from './Button';
 import * as ImgPicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
 
 const ImagePicker = ({ onImageTaken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
 
-  const verifyPermissions = async () => {
-    const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY, Permissions.CAMERA);
+  const handleTakeImage = async () => {
+    const { status } = await ImgPicker.requestCameraPermissionsAsync();
 
     if (status !== 'granted') {
       Alert.alert('Insufficient permissions', 'You need to grant camera permissions to use this app.', [
         { text: 'Okay' },
       ]);
-      return false;
+      return;
     }
-
-    return true;
-  };
-
-  const handleTakeImage = async () => {
-    const hasPermissions = await verifyPermissions();
-    if (!hasPermissions) return;
 
     setIsLoading(true);
 
@@ -48,10 +40,10 @@ const ImagePicker = ({ onImageTaken }) => {
   const preloader = <ActivityIndicator size={21} color={color.accent} />;
 
   return (
-    <View style={styles.container}>
+    <>
       <View style={styles.preview}>{isLoading ? preloader : pickImage}</View>
       <Button style={styles.btn} title='Take Image' onPress={handleTakeImage} color={color.accent} />
-    </View>
+    </>
   );
 };
 
@@ -65,6 +57,8 @@ const styles = StyleSheet.create({
     borderColor: color.accent,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 7.5,
+    overflow: 'hidden',
   },
   text: {
     fontSize: 18,
@@ -74,6 +68,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   btn: {
-    margin: 7.5,
+    marginVertical: 7.5,
   },
 });

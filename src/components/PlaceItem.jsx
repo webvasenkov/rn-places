@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Pressable, Text, StyleSheet, Image, Platform } from 'react-native';
 import { color } from '../constants/styleGuide';
 
-const PlaceItem = ({ image, title, address, onSelect }) => {
+const PlaceItem = ({ imageUri, title, address, onSelect }) => {
   return (
     <Pressable style={styles.container} onPress={onSelect}>
-      <Image style={styles.img} source={{ uri: image }} />
+      <Image style={styles.img} source={{ uri: imageUri }} />
       <View style={styles.infoContainer}>
-        <Text style={styles.text}>{title}</Text>
+        <Text style={[styles.text, styles.textTitle]}>{title}</Text>
         <Text style={[styles.text, styles.textAddress]}>{address}</Text>
       </View>
     </Pressable>
@@ -32,11 +32,16 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   infoContainer: {
-    marginLeft: 7.5,
+    marginLeft: 15,
+    flex: 1,
   },
   text: {
     fontSize: 18,
     color: color.primary,
+  },
+  textTitle: {
+    fontSize: 21,
+    fontWeight: '700',
   },
   textAddress: {
     marginTop: 3.25,
